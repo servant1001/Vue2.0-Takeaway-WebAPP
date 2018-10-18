@@ -23,15 +23,15 @@
       },
       {
         "type": 2,
-        "description": "单人精彩套餐"
+        "description": "單人精彩套餐"
       },
       {
         "type": 3,
-        "description": "该商家支持发票,请下单写好发票抬头"
+        "description": "該商家支持發票,請下單寫好發票抬頭"
       },
       {
         "type": 4,
-        "description": "已加入“外卖保”计划,食品安全保障"
+        "description": "已加入“外賣保”計畫,食品安全保障"
       }
     ],
     "avatar": "http://static.galileo.xiaojukeji.com/static/tms/seller_avatar_256px.jpg",
@@ -66,7 +66,7 @@
               "username": "3******c",
               "rateTime": 1469281964000,
               "rateType": 0,
-              "text": "很喜欢的粥",
+              "text": "很喜歡的粥",
               "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
             },
             {
@@ -88,7 +88,7 @@
           "image": "http://fuss10.elemecdn.com/c/cd/c12745ed8a5171e13b427dbc39401jpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "扁豆焖面",
+          "name": "扁豆燜面",
           "price": 14,
           "oldPrice": "",
           "description": "",
@@ -122,7 +122,7 @@
           "image": "http://fuss10.elemecdn.com/c/6b/29e3d29b0db63d36f7c500bca31d8jpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "葱花饼",
+          "name": "蔥花餅",
           "price": 10,
           "oldPrice": "",
           "description": "",
@@ -156,7 +156,7 @@
           "image": "http://fuss10.elemecdn.com/f/28/a51e7b18751bcdf871648a23fd3b4jpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "牛肉馅饼",
+          "name": "牛肉餡餅",
           "price": 14,
           "oldPrice": "",
           "description": "",
@@ -168,7 +168,7 @@
               "username": "3******c",
               "rateTime": 1469281964000,
               "rateType": 1,
-              "text": "难吃不推荐",
+              "text": "難吃不推薦",
               "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
             },
             {
@@ -190,7 +190,7 @@
           "image": "http://fuss10.elemecdn.com/d/b9/bcab0e8ad97758e65ae5a62b2664ejpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "招牌猪肉白菜锅贴/10个",
+          "name": "招牌豬肉白菜鍋貼/ 10個",
           "price": 17,
           "oldPrice": "",
           "description": "",
@@ -257,7 +257,7 @@
           "image": "http://fuss10.elemecdn.com/8/a6/453f65f16b1391942af11511b7a90jpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "红豆薏米美肤粥",
+          "name": "红豆薏米美膚粥",
           "price": 12,
           "oldPrice": "",
           "description": "甜粥",
@@ -291,7 +291,7 @@
           "image": "http://fuss10.elemecdn.com/d/22/260bd78ee6ac6051136c5447fe307jpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "八宝酱菜",
+          "name": "八寶醬菜",
           "price": 4,
           "oldPrice": "",
           "description": "",
@@ -325,7 +325,7 @@
           "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "红枣山药糙米粥",
+          "name": "紅棗山藥糙米粥",
           "price": 10,
           "oldPrice": "",
           "description": "",

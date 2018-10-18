@@ -17,12 +17,12 @@
                     <span class="text">{{seller.supports[0].description}}</span>
                 </div>
             </div>
-            <div v-if="seller.supports" class="support-count">
+            <div v-if="seller.supports" class="support-count" @click="showDetail">
                 <span class="count">{{seller.supports.length}}個</span>
                 <i class="icon-keyboard_arrow_right"></i>
             </div>
         </div>
-        <div class="bulletin-wrapper">
+        <div class="bulletin-wrapper" @click="showDetail">
             <span class="bulletin-title"></span><span
              class="bulletin-text">{{seller.bulletin}}</span>
             <i class="icon-keyboard_arrow_right"></i>
@@ -30,19 +30,72 @@
         <div class="background">
             <img width="100%" height="100%" :src="seller.avatar" alt="">
         </div>
+        <transition name="fade"> <!--頁面切換效果 Vue使用方法(https://vuejs.org/v2/guide/transitions.html)-->
+            <div v-show="detailShow" class="detail">
+                <div class="detail-wrapper clearfix">
+                    <div class="detail-main">
+                        <h1 class="name">{{seller.name}}</h1>
+                        <div class="star-wrapper">
+                            <star :size="48" :score="seller.score"></star>
+                        </div>
+                        <div class="title">
+                            <div class="line"></div>
+                            <div class="text">優惠信息</div>
+                            <div class="line"></div>
+                        </div>
+                        <ul v-if="seller.supports" class="supports">
+                            <li class="support-item" v-for="(item,index) in seller.supports" :key="item.id">
+                                <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+                                <span class="text">{{seller.supports[index].description}}</span>
+                            </li>
+                        </ul>
+                        <div class="title">
+                            <div class="line"></div>
+                            <div class="text">店家公告</div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="bulletin">
+                            <p class="content">{{seller.bulletin}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-close" @click="hideDetail">
+                    <i class="icon-close"></i>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 
 <script>
+    import star from '../../components/star/star';
+    let data = require('../../../data.json');
     export default {
         // 接收seller
         props: {
-            seller: {
-                type: Object
+            // seller: {
+            //     type: Object
+            // }
+        },
+        data() {
+            return {
+                detailShow: false
+            };
+        },
+        methods: {
+            showDetail() {
+                this.detailShow = true;
+            },
+            hideDetail() {
+                this.detailShow = false;
             }
         },
         created() {
             this.classMap = ['decrease', 'discount', 'guarantee', 'invoice', 'special'];
+            this.seller = data.seller;
+        },
+        components: {
+            star
         }
     };
 </script>
@@ -51,7 +104,7 @@
  @import "../../common/sass/index"
  .header
     position: relative
-    // overflow: hidden
+    overflow: hidden // 遮掉blur模糊超出
     color: #fff
     background-color: rgba(7,17,27,0.5)
     .content-wrapper
@@ -69,7 +122,7 @@
             .title
                 margin: 2px 0 8px 0
                 .brand
-                    display: inline-block //brand本身沒內容，所以要設定inline-block空出空間
+                    display: inline-block // brand本身沒內容，所以要設定inline-block空出空間
                     vertical-align: top
                     width: 30px
                     height: 18px
@@ -95,7 +148,7 @@
                     background-size: 12px 12px
                     background-repeat: no-repeat
                     &.decrease
-                        +bg-image('decrease_1') //圖片
+                        +bg-image('decrease_1') // 圖片
                     &.discount
                         +bg-image('discount_1')
                     &.guarantee
@@ -108,7 +161,7 @@
                     line-height: 12px
                     font-size: 10px
         .support-count
-            position: absolute //相對於.content-wrapper定位
+            position: absolute // 相對於.content-wrapper定位
             right: 12px
             bottom: 18px
             padding: 0 8px
@@ -157,4 +210,90 @@
         height: 100%
         z-index: -1
         filter: blur(10px)
+    .detail
+        position: fixed
+        z-index: 100
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        overflow: auto
+        background: rgba(7, 17, 27, 0.8)
+        backdrop-filter: blur(10px) // 只支持iOS
+        &.fade-enter-active, &.fade-leave-active
+            transition: all 1s
+        &.fade-enter, &.fade-leave-to
+            opacity: 0
+        .detail-wrapper
+            min-height: 100%
+            width: 100%
+            .detail-main
+                margin-top: 64px
+                padding-bottom: 64px
+                .name
+                    line-height: 16px
+                    text-align: center
+                    font-size: 16px
+                    font-weight: 700
+                .star-wrapper
+                    margin-top: 18px
+                    padding: -2px 0
+                    text-align: center
+                .title
+                    display: flex
+                    width: 80%
+                    margin: 28px auto 24px auto
+                    .line
+                        flex: 1 // 等同flex-grow: 1
+                        position: relative
+                        top: -6px
+                        border-bottom: 1px solid rgba(255,255,255,0.2)
+                    .text
+                        padding: 0 12px
+                        font-size: 14px
+                        font-weight: 700
+                .supports
+                    // width: 100%
+                    margin: 0 auto
+                    .support-item
+                        padding: 0 12px
+                        margin-bottom: 12px
+                        font-size: 0
+                        &:last-child
+                            margin-bottom: 0
+                        .icon
+                            display: inline-block
+                            vertical-align: top
+                            width: 16px
+                            height: 16px
+                            margin-right: 6px
+                            background-size: 16px 16px
+                            background-repeat: no-repeat
+                            &.decrease
+                                +bg-image('decrease_2') // 優惠圖示
+                            &.discount
+                                +bg-image('discount_2')
+                            &.guarantee
+                                +bg-image('guarantee_2')
+                            &.invoice
+                                +bg-image('invoice_2')
+                            &.special
+                                +bg-image('special_2')
+                        .text
+                            line-height: 16px
+                            font-size: 12px
+                .bulletin
+                    width: 80%
+                    margin: 0 auto
+                    .content
+                        padding: 0 12px
+                        line-height: 24px
+                        font-size: 12px
+        .detail-close
+            position: relative
+            width: 32px
+            height: 32px
+            margin: -64px auto 0 auto
+            // clear: both
+            font-size: 32px
 </style>
