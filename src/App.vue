@@ -58,4 +58,11 @@ export default {
     .tab-item
       flex: 1
       text-align: center
+      & > a // 選擇所有.tab-item子元素a
+        display: block
+        text-decoration: none
+        font-size: 14px
+        color: rgb(77,85,93)
+        &.active
+          color: rgb(240,20,20)
 </style>

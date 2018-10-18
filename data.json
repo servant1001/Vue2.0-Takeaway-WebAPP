@@ -395,14 +395,14 @@
       ]
     },
     {
-      "name": "单人精彩套餐",
+      "name": "單人精彩套餐",
       "type": 2,
       "foods": [
         {
-          "name": "红枣山药粥套餐",
+          "name": "紅棗山藥粥套餐",
           "price": 29,
           "oldPrice": 36,
-          "description": "红枣山药糙米粥,素材包,爽口莴笋丝,四川泡菜或八宝酱菜,配菜可备注",
+          "description": "紅棗山藥糙米粥，素材包，爽口萵筍絲，四川泡菜或八寶醬菜，配菜可備註",
           "sellCount": 17,
           "rating": 100,
           "info": "",
@@ -421,11 +421,11 @@
       ]
     },
     {
-      "name": "冰爽饮品限时特惠",
+      "name": "冰爽飲品限時特惠",
       "type": 1,
       "foods": [
         {
-          "name": "VC无限橙果汁",
+          "name": "VC無限橙果汁",
           "price": 8,
           "oldPrice": 10,
           "description": "",
@@ -437,7 +437,7 @@
               "username": "3******c",
               "rateTime": 1469281964000,
               "rateType": 0,
-              "text": "还可以",
+              "text": "還可以",
               "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
             },
             {
@@ -454,11 +454,11 @@
       ]
     },
     {
-      "name": "精选热菜",
+      "name": "精選熱菜",
       "type": -1,
       "foods": [
         {
-          "name": "娃娃菜炖豆腐",
+          "name": "娃娃菜燉豆腐",
           "price": 17,
           "oldPrice": "",
           "description": "",
@@ -470,7 +470,7 @@
               "username": "3******c",
               "rateTime": 1469281964000,
               "rateType": 0,
-              "text": "菜量还可以,味道还可以",
+              "text": "菜量還可以,味道還可以",
               "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
             },
             {
@@ -512,7 +512,7 @@
           "image": "http://fuss10.elemecdn.com/9/c6/f3bc84468820121112e79583c24efjpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "香酥黄金鱼/3条",
+          "name": "香酥黃金魚/ 3條",
           "price": 11,
           "oldPrice": "",
           "description": "",
@@ -541,11 +541,11 @@
       ]
     },
     {
-      "name": "爽口凉菜",
+      "name": "爽口涼菜",
       "type": -1,
       "foods": [
         {
-          "name": "八宝酱菜",
+          "name": "八寶醬菜",
           "price": 4,
           "oldPrice": "",
           "description": "",
@@ -615,17 +615,17 @@
       ]
     },
     {
-      "name": "精选套餐",
+      "name": "精選套餐",
       "type": -1,
       "foods": [
         {
           "name": "红豆薏米粥套餐",
           "price": 37,
           "oldPrice": "",
-          "description": "红豆薏米粥,三鲜干蒸烧卖,拍黄瓜",
+          "description": "",
           "sellCount": 3,
           "rating": 100,
-          "info": "",
+          "info": "紅豆薏米粥，三鮮幹蒸燒賣，拍黃瓜",
           "ratings": [
             {
               "username": "2******3",
@@ -665,7 +665,7 @@
       "type": -1,
       "foods": [
         {
-          "name": "蜜瓜圣女萝莉杯",
+          "name": "蜜瓜聖女蘿莉杯",
           "price": 6,
           "oldPrice": "",
           "description": "",
@@ -677,7 +677,7 @@
           "image": "http://fuss10.elemecdn.com/b/5f/b3b04c259d5ec9fa52e1856ee50dajpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "加多宝",
+          "name": "加多寶",
           "price": 6,
           "oldPrice": "",
           "description": "",
@@ -711,7 +711,7 @@
           "image": "http://fuss10.elemecdn.com/b/9f/5e6c99c593cf65229225c5661bcdejpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "VC无限橙果汁",
+          "name": "VC無限橙果汁",
           "price": 8,
           "oldPrice": 10,
           "description": "",
@@ -723,7 +723,7 @@
               "username": "3******c",
               "rateTime": 1469281964000,
               "rateType": 0,
-              "text": "还可以",
+              "text": "還可以",
               "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
             },
             {
@@ -744,7 +744,7 @@
       "type": -1,
       "foods": [
         {
-          "name": "扁豆焖面",
+          "name": "扁豆燜面",
           "price": 14,
           "oldPrice": "",
           "description": "",
@@ -778,7 +778,7 @@
           "image": "http://fuss10.elemecdn.com/c/6b/29e3d29b0db63d36f7c500bca31d8jpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "葱花饼",
+          "name": "葱花餅",
           "price": 10,
           "oldPrice": "",
           "description": "",
@@ -812,7 +812,7 @@
           "image": "http://fuss10.elemecdn.com/f/28/a51e7b18751bcdf871648a23fd3b4jpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "牛肉馅饼",
+          "name": "牛肉餡餅",
           "price": 14,
           "oldPrice": "",
           "description": "",
@@ -824,7 +824,7 @@
               "username": "3******c",
               "rateTime": 1469281964000,
               "rateType": 1,
-              "text": "难吃不推荐",
+              "text": "難吃不推薦",
               "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
             },
             {
@@ -846,7 +846,7 @@
           "image": "http://fuss10.elemecdn.com/d/b9/bcab0e8ad97758e65ae5a62b2664ejpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "招牌猪肉白菜锅贴/10个",
+          "name": "招牌豬肉白菜鍋貼/10個",
           "price": 17,
           "oldPrice": "",
           "description": "",
@@ -931,7 +931,7 @@
               "username": "3******c",
               "rateTime": 1469281964000,
               "rateType": 0,
-              "text": "很喜欢的粥",
+              "text": "很喜歡的粥",
               "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png"
             },
             {
@@ -987,7 +987,7 @@
           "image": "http://fuss10.elemecdn.com/8/a6/453f65f16b1391942af11511b7a90jpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "红豆薏米美肤粥",
+          "name": "紅豆薏米美膚粥",
           "price": 12,
           "oldPrice": "",
           "description": "甜粥",
@@ -1021,7 +1021,7 @@
           "image": "http://fuss10.elemecdn.com/d/22/260bd78ee6ac6051136c5447fe307jpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "红枣山药糙米粥",
+          "name": "紅棗山藥糙米粥",
           "price": 10,
           "oldPrice": "",
           "description": "",
@@ -1055,7 +1055,7 @@
           "image": "http://fuss10.elemecdn.com/9/b5/469d8854f9a3a03797933fd01398bjpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "鲜蔬菌菇粥",
+          "name": "鮮蔬菌菇粥",
           "price": 11,
           "oldPrice": "",
           "description": "咸粥",
@@ -1088,7 +1088,7 @@
           "image": "http://fuss10.elemecdn.com/e/a3/5317c68dd618929b6ac05804e429ajpeg.jpeg?imageView2/1/w/750/h/750"
         },
         {
-          "name": "田园蔬菜粥",
+          "name": "田園蔬菜粥",
           "price": 10,
           "oldPrice": "",
           "description": "咸粥",
@@ -1131,14 +1131,14 @@
       "deliveryTime": 30,
       "score": 5,
       "rateType": 0,
-      "text": "不错,粥很好喝,我经常吃这一家,非常赞,以后也会常来吃,强烈推荐.",
+      "text": "不錯,粥很好喝,我經常吃這一家,非常贊,以後也會常來吃,強烈推薦.",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": [
         "南瓜粥",
         "皮蛋瘦肉粥",
-        "扁豆焖面",
-        "娃娃菜炖豆腐",
-        "牛肉馅饼"
+        "扁豆燜麵",
+        "娃娃菜燉豆腐",
+        "牛肉餡餅"
       ]
     },
     {
@@ -1148,10 +1148,10 @@
       "score": 4,
       "rateType": 0,
       "deliveryTime": "",
-      "text": "服务态度不错",
+      "text": "服務態度不錯",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": [
-        "扁豆焖面"
+        "扁豆燜麵"
       ]
     },
     {
@@ -1169,7 +1169,7 @@
       "deliveryTime": 20,
       "score": 5,
       "rateType": 0,
-      "text": "良心店铺",
+      "text": "良心店鋪",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1189,7 +1189,7 @@
       "deliveryTime": 70,
       "score": 1,
       "rateType": 1,
-      "text": "送货速度蜗牛一样",
+      "text": "送貨速度蝸牛一樣",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1199,7 +1199,7 @@
       "deliveryTime": 30,
       "score": 5,
       "rateType": 0,
-      "text": "很喜欢的粥店",
+      "text": "很喜歡的粥店",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1209,7 +1209,7 @@
       "deliveryTime": "",
       "score": 4,
       "rateType": 0,
-      "text": "量给的还可以",
+      "text": "量给的還可以",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1229,7 +1229,7 @@
       "deliveryTime": "",
       "score": 4,
       "rateType": 0,
-      "text": "孩子喜欢吃这家",
+      "text": "孩子喜歡吃這家",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": [
         "南瓜粥"
@@ -1261,7 +1261,7 @@
       "deliveryTime": 15,
       "score": 5,
       "rateType": 0,
-      "text": "送货速度很快",
+      "text": "送貨速度很快",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1281,7 +1281,7 @@
       "deliveryTime": "",
       "score": 4,
       "rateType": 0,
-      "text": "下雨天给快递小哥点个赞",
+      "text": "下雨天給快遞小哥點個讚",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1301,7 +1301,7 @@
       "deliveryTime": "",
       "score": 5,
       "rateType": 0,
-      "text": "吃了还想再吃",
+      "text": "吃了還想再吃",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1311,7 +1311,7 @@
       "deliveryTime": "",
       "score": 3,
       "rateType": 1,
-      "text": "发票开的不对",
+      "text": "發票開的不對",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1331,7 +1331,7 @@
       "deliveryTime": 40,
       "score": 5,
       "rateType": 0,
-      "text": "还不错吧",
+      "text": "還不錯吧",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },
@@ -1351,7 +1351,7 @@
       "deliveryTime": "",
       "score": 4,
       "rateType": 0,
-      "text": "很喜欢的粥",
+      "text": "很喜歡的粥",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": []
     },

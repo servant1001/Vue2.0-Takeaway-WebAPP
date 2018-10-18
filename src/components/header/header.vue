@@ -91,7 +91,7 @@
             }
         },
         created() {
-            this.classMap = ['decrease', 'discount', 'guarantee', 'invoice', 'special'];
+            this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
             this.seller = data.seller;
         },
         components: {
@@ -253,7 +253,7 @@
                         font-size: 14px
                         font-weight: 700
                 .supports
-                    // width: 100%
+                    width: 80%
                     margin: 0 auto
                     .support-item
                         padding: 0 12px
