@@ -2,7 +2,7 @@
     <div class="goods">
         <div class="menu-wrapper" ref="menuWrapper"><!--Vue1.x中使用v-el標記DOM元素，v-ref標記组件元素，2.0统一使用ref-->
             <ul>
-                <li v-for="item in goods" class="menu-item" :key="item.id">
+                <li v-for="(item,index) in goods" class="menu-item" ref="menuList" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)" :key="item.id">
                     <span class="text border-1px">
                         <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
                     </span>
@@ -11,7 +11,7 @@
         </div>
         <div class="foods-wrapper" ref="foodsWrapper">
             <ul>
-                <li v-for="item in goods" class="food-list" :key="item.id ">
+                <li v-for="item in goods" class="food-list" ref="foodList" :key="item.id ">
                     <h1 class="title">{{item.name}}</h1>
                     <ul>
                         <li v-for="food in item.foods" class="food-item border-1px" :key="food.id">
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import BScroll from 'better-scroll';
+    import BScroll from 'better-scroll'; // 頁面滾動插件
     const ERR_OK = 0;
     // let data = require('../../../data.json');
     export default {
@@ -51,8 +51,24 @@
         },
         data() {
             return {
-                goods: []
+                goods: [],
+                listHeight: [],
+                scrollY: 0,
+                selectedFood: {}
             };
+        },
+        computed: {
+            currentIndex() { // 判斷目前落在哪個區間，回傳index
+                for (let i = 0; i < this.listHeight.length; i++) {
+                    let height1 = this.listHeight[i];
+                    let height2 = this.listHeight[i + 1];
+                    if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+                        // this._followScroll(i);
+                        return i;
+                    }
+                }
+                return 0;
+            }
         },
         created() {
             this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
@@ -60,21 +76,64 @@
                 response = response.body;
                 if (response.errno === ERR_OK) {
                     this.goods = response.data;
-                    this._initScroll();
+                    this.$nextTick(() => {
+                        this._initScroll();
+                        this._calculateHeight();
+                    });
                 }
                 // console.log(this.goods); // 查看是否有接收到goods資料
             });
             // this.goods = data.goods;
         },
         methods: {
+            selectMenu(index, event) { // 點擊左邊商品列表時，右側滾動到對應商品位置
+                if (!event._constructed) { // 如果不存在這個屬性，則判斷為原生js點擊事件，不執行下面函数
+                    return;
+                }
+                let foodList = this.$refs.foodList;
+                let el = foodList[index];
+                this.foodsScroll.scrollToElement(el, 300);
+            },
+            selectFood(food, event) {
+                if (!event._constructed) {
+                    return;
+                }
+                this.selectedFood = food;
+                this.$refs.food.show();
+            },
             _initScroll() {
-                this.menuScroll = new BScroll(this.$refs.menuWrapper, {
+                this.meunScroll = new BScroll(this.$refs.menuWrapper, {
                     click: true
                 });
+
                 this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
-                    click: true
+                    click: true,
+                    probeType: 3
                 });
+
+                this.foodsScroll.on('scroll', (pos) => {
+                    // 判断滑动方向，避免下拉时分类高亮错误（如第一分类商品数量为1时，下拉使得第二分类高亮）
+                    if (pos.y <= 0) {
+                        this.scrollY = Math.abs(Math.round(pos.y));
+                    }
+                });
+            },
+            _calculateHeight() {
+                let foodList = this.$refs.foodList;
+                let height = 0;
+                this.listHeight.push(height);
+                for (let i = 0; i < foodList.length; i++) {
+                let item = foodList[i];
+                height += item.clientHeight;
+                this.listHeight.push(height);
+                }
             }
+            // ,
+            // _followScroll(index) { // *左邊商品分類高量
+            //     let menuList = this.$refs.menuList;
+            //     let el = menuList[index];
+            //     this.meunScroll.scrollToElement(el, 300, 0, -100);
+            // }
         }
     };
 </script>
@@ -98,6 +157,14 @@
                 height: 54px
                 line-height: 14px
                 padding: 0 12px
+                &.current
+                    position: relative
+                    margin-top: -1px
+                    z-index: 10px
+                    background: #fff
+                    font-weight: 700
+                    .text
+                        +border-none()
                 .icon
                     display: inline-block
                     vertical-align: top
