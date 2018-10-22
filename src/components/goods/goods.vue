@@ -36,11 +36,14 @@
                 </li>
             </ul>
         </div>
+        <shopcart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></shopcart>
     </div>
 </template>
 
 <script>
     import BScroll from 'better-scroll'; // 頁面滾動插件
+    import shopcart from '../../components/shopcart/shopcart'; // 購物車組件
+
     const ERR_OK = 0;
     // let data = require('../../../data.json');
     export default {
@@ -76,7 +79,7 @@
                 response = response.body;
                 if (response.errno === ERR_OK) {
                     this.goods = response.data;
-                    this.$nextTick(() => {
+                    this.$nextTick(() => { // $nextTick 是在下次DOM更新循環结束後執行延遲回調，在修改數據後使用$nextTick，可以在回調中獲取更新後的DOM，*這樣才可以確保執行函數是使用更新過的DOM
                         this._initScroll();
                         this._calculateHeight();
                     });
@@ -134,6 +137,9 @@
             //     let el = menuList[index];
             //     this.meunScroll.scrollToElement(el, 300, 0, -100);
             // }
+        },
+        components: { // 註冊組件
+            shopcart
         }
     };
 </script>

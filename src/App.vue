@@ -12,12 +12,12 @@
         <router-link to="/seller">店家</router-link>
       </div>
     </div>
-    <router-view></router-view>
+    <router-view :seller="seller"></router-view>
   </div>
 </template>
 
 <script>
-import Header from './components/header/header.vue';
+import Header from './components/header/header.vue'; // 引入header組件
 
 const ERR_OK = 0;
 
@@ -35,7 +35,7 @@ export default {
         this.seller = Object.assign({}, this.seller, response.data);
       }
       this.seller = response.data;
-      // console.log(this.seller);
+      // console.log(this.seller); // 測試有無抓取到seller資料
     });
   },
   components: {
