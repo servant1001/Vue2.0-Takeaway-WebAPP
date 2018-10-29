@@ -23,14 +23,14 @@
                   <h2 class="name">{{food.name}}</h2>
                   <p class="description">{{food.description}}</p>
                   <div class="extra">
-                    <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
+                    <span class="count">月售{{food.sellCount}}份</span><span>好評率{{food.rating}}%</span>
                   </div>
                   <div class="price">
                     <span class="now">￥{{food.price}}</span><span class="old"
                                                                   v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                   </div>
                   <div class="cartcontrol-wrapper">
-                    <cartcontrol @add="addFood" :food="food"></cartcontrol>
+                    <cartcontrol @add="addFood" :food="food"></cartcontrol><!--@add用來傳遞在cartcontrol被點擊的+其DOM元素透過&emit派發給父組件good.vue-->
                   </div>
                 </div>
               </li>
@@ -46,130 +46,131 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import BScroll from 'better-scroll'; // 頁面滾動插件
+    import BScroll from 'better-scroll'; // 頁面滾動插件
     import shopcart from '../../components/shopcart/shopcart'; // 購物車組件
     import cartcontrol from '../../components/cartcontrol/cartcontrol'; // 商品數量控制(-+)組建
 //   import food from '../../components/food/food';
 
-  const ERR_OK = 0;
+    const ERR_OK = 0;
 
-  export default {
-    props: {
-      seller: {
-        type: Object
-      }
-    },
-    data() {
-      return {
-        goods: [],
-        listHeight: [],
-        scrollY: 0,
-        selectedFood: {}
-      };
-    },
-    computed: {
-        currentIndex() { // 判斷目前落在哪個區間，回傳index
-            for (let i = 0; i < this.listHeight.length; i++) {
-                let height1 = this.listHeight[i];
-                let height2 = this.listHeight[i + 1];
-                if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
-                    // this._followScroll(i);
-                    return i;
-                }
-            }
-            return 0;
+    export default {
+        props: {
+        seller: {
+            type: Object
+        }
         },
-        selectFoods() {
-            let foods = [];
-            this.goods.forEach((good) => {
-                good.foods.forEach((food) => {
-                    if (food.count) {
-                        foods.push(food);
+        data() {
+        return {
+            goods: [],
+            listHeight: [],
+            scrollY: 0,
+            selectedFood: {}
+        };
+        },
+        computed: {
+            currentIndex() { // 判斷目前落在哪個區間，回傳index
+                for (let i = 0; i < this.listHeight.length; i++) {
+                    let height1 = this.listHeight[i];
+                    let height2 = this.listHeight[i + 1];
+                    if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+                        // this._followScroll(i);
+                        return i;
+                    }
+                }
+                return 0;
+            },
+            selectFoods() {
+                let foods = [];
+                this.goods.forEach((good) => {
+                    good.foods.forEach((food) => {
+                        if (food.count) {
+                            foods.push(food);
+                        }
+                    });
+                });
+                return foods;
+            }
+        },
+        created() {
+            this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+            this.$http.get('api/goods').then((response) => { // vue-resource
+                response = response.body;
+                if (response.errno === ERR_OK) {
+                    this.goods = response.data;
+                    this.$nextTick(() => { // $nextTick 是在下次DOM更新循環结束後執行延遲回調，在修改數據後使用$nextTick，可以在回調中獲取更新後的DOM，*這樣才可以確保執行函數是使用更新過的DOM
+                        this._initScroll();
+                        this._calculateHeight();
+                    });
+                }
+                // console.log(this.goods); // 查看是否有接收到goods資料
+            });
+            // this.goods = data.goods;
+        },
+        methods: {
+            selectMenu(index, event) { // 點擊左邊商品列表時，右側滾動到對應商品位置
+                if (!event._constructed) { // 如果不存在這個屬性，則判斷為原生js點擊事件，不執行下面函数
+                    return;
+                }
+                let foodList = this.$refs.foodList;
+                let el = foodList[index];
+                this.foodsScroll.scrollToElement(el, 300);
+            },
+            selectFood(food, event) {
+                if (!event._constructed) {
+                    return;
+                }
+                this.selectedFood = food;
+                this.$refs.food.show();
+            },
+            addFood(target) { // 子組件傳來的事件 小球
+                this._drop(target); // 傳遞Target
+            },
+            _drop(target) {
+                // 使用$nextTick目的為優化小球掉落動畫流暢度，因為有兩個動畫(-出現、小球)同時執行會卡，使用$nextTick避開同時執行
+                this.$nextTick(() => {
+                    this.$refs.shopcart.drop(target); // 調用shopcart組件中的drop方法，向shopcart組件傳入當前點擊的DOM元素
+                });
+            },
+            _initScroll() {
+                this.meunScroll = new BScroll(this.$refs.menuWrapper, {
+                    click: true
+                });
+
+                this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+                    click: true,
+                    probeType: 3
+                });
+
+                this.foodsScroll.on('scroll', (pos) => {
+                    // 判斷滑動方向，避免下拉时分類高亮錯誤（如第一分類商品數量為1時，下拉使得第二分類高亮）
+                    if (pos.y <= 0) {
+                        this.scrollY = Math.abs(Math.round(pos.y));
                     }
                 });
-            });
-            return foods;
-        }
-    },
-    created() {
-        this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
-        this.$http.get('api/goods').then((response) => {
-            response = response.body;
-            if (response.errno === ERR_OK) {
-                this.goods = response.data;
-                this.$nextTick(() => { // $nextTick 是在下次DOM更新循環结束後執行延遲回調，在修改數據後使用$nextTick，可以在回調中獲取更新後的DOM，*這樣才可以確保執行函數是使用更新過的DOM
-                    this._initScroll();
-                    this._calculateHeight();
-                });
-            }
-            // console.log(this.goods); // 查看是否有接收到goods資料
-        });
-        // this.goods = data.goods;
-    },
-    methods: {
-        selectMenu(index, event) { // 點擊左邊商品列表時，右側滾動到對應商品位置
-            if (!event._constructed) { // 如果不存在這個屬性，則判斷為原生js點擊事件，不執行下面函数
-                return;
-            }
-            let foodList = this.$refs.foodList;
-            let el = foodList[index];
-            this.foodsScroll.scrollToElement(el, 300);
-        },
-        selectFood(food, event) {
-            if (!event._constructed) {
-                return;
-            }
-            this.selectedFood = food;
-            this.$refs.food.show();
-        },
-        addFood(target) {
-            this._drop(target);
-        },
-        _drop(target) {
-            // 購物車小球掉落動畫，異步執行動畫
-            this.$nextTick(() => {
-                this.$refs.shopcart.drop(target);
-            });
-        },
-        _initScroll() {
-            this.meunScroll = new BScroll(this.$refs.menuWrapper, {
-                click: true
-            });
-
-            this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
-                click: true,
-                probeType: 3
-            });
-
-            this.foodsScroll.on('scroll', (pos) => {
-                // 判断滑动方向，避免下拉时分类高亮错误（如第一分类商品数量为1时，下拉使得第二分类高亮）
-                if (pos.y <= 0) {
-                    this.scrollY = Math.abs(Math.round(pos.y));
+            },
+            _calculateHeight() {
+                let foodList = this.$refs.foodList;
+                let height = 0;
+                this.listHeight.push(height); // 第一個設height=0
+                for (let i = 0; i < foodList.length; i++) {
+                    let item = foodList[i];
+                    height += item.clientHeight;
+                    this.listHeight.push(height);
+                    // console.log(height);
                 }
-            });
-        },
-        _calculateHeight() {
-            let foodList = this.$refs.foodList;
-            let height = 0;
-            this.listHeight.push(height);
-            for (let i = 0; i < foodList.length; i++) {
-            let item = foodList[i];
-            height += item.clientHeight;
-            this.listHeight.push(height);
             }
+            // ,
+            // _followScroll(index) {
+            //     let menuList = this.$refs.menuList;
+            //     let el = menuList[index];
+            //     this.meunScroll.scrollToElement(el, 300, 0, -100);
+            // }
+        },
+        components: { // 註冊組件
+            shopcart,
+            cartcontrol
         }
-        // ,
-        // _followScroll(index) { // *左邊商品分類高量
-        //     let menuList = this.$refs.menuList;
-        //     let el = menuList[index];
-        //     this.meunScroll.scrollToElement(el, 300, 0, -100);
-        // }
-    },
-    components: { // 註冊組件
-        shopcart,
-        cartcontrol
-    }
-  };
+    };
 </script>
 
 <style lang="sass">
@@ -191,7 +192,7 @@
                 height: 54px
                 line-height: 14px
                 padding: 0 12px
-                &.current
+                &.current // 目前位置的商品高亮白底
                     position: relative
                     margin-top: -1px
                     z-index: 10px

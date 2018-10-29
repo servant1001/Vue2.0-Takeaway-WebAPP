@@ -32,7 +32,7 @@
                 } else {
                     this.food.count++;
                 }
-                this.$emit('add', event.target);
+                this.$emit('add', event.target); // 將被點擊的+其DOM元素透過&emit派發給父組件good.vue
             },
             decreaseCart(event) {
                 if (!event._constructed) {
