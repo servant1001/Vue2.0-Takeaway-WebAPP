@@ -7,7 +7,7 @@
                         <div class="logo" :class="{'highlight':totalCount>0}">
                             <i class="icon-shopping_cart" :class="{'highlight':totalCount>0}"></i>
                         </div>
-                        <div  class="num">{{totalCount}}</div>
+                        <div  class="num" v-show="totalCount>0">{{totalCount}}</div>
                     </div>
                     <div class="price" :class="{'highlight':totalPrice>0}">¥ {{totalPrice}}</div>
                     <div class="description">另需配送費{{deliveryPrice}}元</div>
@@ -28,7 +28,8 @@
                 </div>
             </div>
             <transition name="fold">
-                    <div class="shopcart-list" v-show="listShow">
+                    <!-- <div class="shopcart-list" v-show="!fold&&listShow"> -->
+                    <div class="shopcart-list" v-show="!fold">
                         <div class="list-header">
                             <h1 class="title">購物車</h1>
                             <span class="empty" @click="empty">清空</span>
@@ -50,7 +51,7 @@
             </transition>
         </div>
         <transition name="fade">
-            <div class="list-mask" @click="hideList" v-show="listShow"></div>
+            <div class="list-mask" @click="hideList" v-show="!fold"></div>
         </transition>
     </div>
 </template>
@@ -129,26 +130,33 @@
                 } else {
                     return 'enough';
                 }
-            },
-            // listShow: {
-            //     get: function () {
-            //         return this.fold;
-            //     },
-            //     set: function () {
-            //         if (!this.totalCount) {
-            //         this.fold = true;
-            //         return false;
-            //         }
-            //         let show = !this.fold;
-            //         return show;
+            }
+            // ,
+            // listShow() {
+            //     let show = !this.fold;
+            //     if (show) {
+            //         this.$nextTick(() => {
+            //             if (!this.scroll) {
+            //                 this.scroll = new BScroll(this.$refs.listContent, {
+            //                     click: true
+            //                 });
+            //             } else {
+            //                 this.scroll.refresh();
+            //             }
+            //         });
             //     }
+            //     return show;
             // }
-            listShow() {
+        },
+        watch: {
+            totalCount: function() {
                 if (!this.totalCount) {
                     this.fold = true;
                     return false;
                 }
-                let show = !this.fold;
+            },
+            fold: function(totalCount) {
+                let show = this.fold;
                 if (show) {
                     this.$nextTick(() => {
                         if (!this.scroll) {
@@ -332,7 +340,7 @@
                     &.enough
                         background: #00b43c
                         color: #fff
-        .ball-container
+        .ball-container // 小球
             .ball
                 position: fixed
                 left: 32px
@@ -403,12 +411,12 @@
         width: 100%
         height: 100%
         z-index: 40
-        backdrop-filter: blur(10px)
-        opacity: 1
+        backdrop-filter: blur(10px) // 背景模糊
+        opacity: 1 // transition start
         background: rgba(7, 17, 27, 0.6)
         &.fade-enter-active, &.fade-leave-active
             transition: all 0.5s
         &.fade-enter, &.fade-leave-active
             opacity: 0
-            background: rgba(7, 17, 27, 0)
+            background: rgba(7, 17, 27, 0) // transition end
 </style>

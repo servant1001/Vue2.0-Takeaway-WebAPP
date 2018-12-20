@@ -1,71 +1,70 @@
 <template>
-  <div>
-    <div class="goods">
-      <div class="menu-wrapper" ref="menuWrapper"><!--Vue1.x中使用v-el標記DOM元素，v-ref標記组件元素，2.0统一使用ref-->
-            <ul>
-                <li v-for="(item,index) in goods" class="menu-item" ref="menuList" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)" :key="item.id">
-                    <span class="text border-1px">
-                        <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
-                    </span>
-                </li>
-            </ul>
+    <div>
+        <div class="goods">
+            <div class="menu-wrapper" ref="menuWrapper"><!--Vue1.x中使用v-el標記DOM元素，v-ref標記组件元素，2.0统一使用ref-->
+                <ul>
+                    <li v-for="(item,index) in goods" class="menu-item" ref="menuList" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)" :key="item.id">
+                        <span class="text border-1px">
+                            <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="foods-wrapper" ref="foodsWrapper">
+                <ul>
+                    <li v-for="item in goods" class="food-list" ref="foodList" :key="item.id"><!--商品類別-->
+                        <h1 class="title">{{item.name}}</h1>
+                        <ul>
+                            <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px" :key="food.id"><!--每種類別裡的商品-->
+                                <div class="icon">
+                                    <img width="57" height="57" :src="food.icon">
+                                </div>
+                                <div class="content">
+                                    <h2 class="name">{{food.name}}</h2>
+                                    <p class="description">{{food.description}}</p>
+                                    <div class="extra">
+                                        <span class="count">月售{{food.sellCount}}份</span><span>好評率{{food.rating}}%</span>
+                                    </div>
+                                    <div class="price">
+                                        <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                                    </div>
+                                    <div class="cartcontrol-wrapper">
+                                        <cartcontrol @add="addFood" :food="food"></cartcontrol><!--@add用來傳遞在cartcontrol被點擊的+其DOM元素透過&emit派發給父組件good.vue-->
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice"
+                        :minPrice="seller.minPrice"></shopcart><!--購物車組件-->
         </div>
-      <div class="foods-wrapper" ref="foodsWrapper">
-        <ul>
-          <li v-for="item in goods" class="food-list" ref="foodList" :key="item.id">
-            <h1 class="title">{{item.name}}</h1>
-            <ul>
-              <li v-for="food in item.foods" class="food-item border-1px" :key="food.id">
-                <div class="icon">
-                  <img width="57" height="57" :src="food.icon">
-                </div>
-                <div class="content">
-                  <h2 class="name">{{food.name}}</h2>
-                  <p class="description">{{food.description}}</p>
-                  <div class="extra">
-                    <span class="count">月售{{food.sellCount}}份</span><span>好評率{{food.rating}}%</span>
-                  </div>
-                  <div class="price">
-                    <span class="now">￥{{food.price}}</span><span class="old"
-                                                                  v-show="food.oldPrice">￥{{food.oldPrice}}</span>
-                  </div>
-                  <div class="cartcontrol-wrapper">
-                    <cartcontrol @add="addFood" :food="food"></cartcontrol><!--@add用來傳遞在cartcontrol被點擊的+其DOM元素透過&emit派發給父組件good.vue-->
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice"
-                :minPrice="seller.minPrice"></shopcart>
+        <food @add="addFood" :food="selectedFood" ref="food"></food><!--商品資訊組件(點擊商品後顯示)-->
     </div>
-    <!-- <food @add="addFood" :food="selectedFood" ref="food"></food> -->
-  </div>
 </template>
 
 <script type="text/ecmascript-6">
     import BScroll from 'better-scroll'; // 頁面滾動插件
     import shopcart from '../../components/shopcart/shopcart'; // 購物車組件
     import cartcontrol from '../../components/cartcontrol/cartcontrol'; // 商品數量控制(-+)組建
-//   import food from '../../components/food/food';
+    import food from '../../components/food/food'; // 商品資訊組件(點擊商品後顯示)
 
     const ERR_OK = 0;
 
     export default {
         props: {
-        seller: {
-            type: Object
-        }
+            seller: {
+                type: Object
+            }
         },
         data() {
-        return {
-            goods: [],
-            listHeight: [],
-            scrollY: 0,
-            selectedFood: {}
-        };
+            return {
+                goods: [],
+                listHeight: [],
+                scrollY: 0,
+                selectedFood: {} // 點擊打開商品資訊，一開始無任何點擊
+            };
         },
         computed: {
             currentIndex() { // 判斷目前落在哪個區間，回傳index
@@ -115,23 +114,23 @@
                 let el = foodList[index];
                 this.foodsScroll.scrollToElement(el, 300);
             },
-            selectFood(food, event) {
+            selectFood(food, event) { // 點擊右邊商品列表中商品時
                 if (!event._constructed) {
                     return;
                 }
                 this.selectedFood = food;
-                this.$refs.food.show();
+                this.$refs.food.show(); // 調用food.vue裡的show()方法
             },
             addFood(target) { // 子組件傳來的事件 小球
                 this._drop(target); // 傳遞Target
             },
-            _drop(target) {
+            _drop(target) { // 有加_符號的方法代表為目前組件私有使用
                 // 使用$nextTick目的為優化小球掉落動畫流暢度，因為有兩個動畫(-出現、小球)同時執行會卡，使用$nextTick避開同時執行
                 this.$nextTick(() => {
                     this.$refs.shopcart.drop(target); // 調用shopcart組件中的drop方法，向shopcart組件傳入當前點擊的DOM元素
                 });
             },
-            _initScroll() {
+            _initScroll() { // BScroll
                 this.meunScroll = new BScroll(this.$refs.menuWrapper, {
                     click: true
                 });
@@ -148,7 +147,7 @@
                     }
                 });
             },
-            _calculateHeight() {
+            _calculateHeight() { // 計算每種商品類別區塊高度
                 let foodList = this.$refs.foodList;
                 let height = 0;
                 this.listHeight.push(height); // 第一個設height=0
@@ -160,15 +159,16 @@
                 }
             }
             // ,
-            // _followScroll(index) {
+            // _followScroll(index) { // BScroll
             //     let menuList = this.$refs.menuList;
             //     let el = menuList[index];
-            //     this.meunScroll.scrollToElement(el, 300, 0, -100);
+            //     this.meunScroll.scrollToElement(el, 300, 0, -100); // scrollToElement(el, time, offsetX, offsetY, easing)
             // }
         },
         components: { // 註冊組件
             shopcart,
-            cartcontrol
+            cartcontrol,
+            food
         }
     };
 </script>
