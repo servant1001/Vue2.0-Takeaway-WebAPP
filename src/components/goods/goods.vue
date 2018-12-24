@@ -51,12 +51,12 @@
     import food from '../../components/food/food'; // 商品資訊組件(點擊商品後顯示)
 
     const ERR_OK = 0;
-
+    let data = require('../../../data.json');
     export default {
         props: {
-            seller: {
-                type: Object
-            }
+            // seller: {
+            //     type: Object
+            // }
         },
         data() {
             return {
@@ -72,7 +72,7 @@
                     let height1 = this.listHeight[i];
                     let height2 = this.listHeight[i + 1];
                     if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
-                        // this._followScroll(i);
+                        this._followScroll(i);
                         return i;
                     }
                 }
@@ -92,6 +92,7 @@
         },
         created() {
             this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
+            this.seller = data.seller;
             this.$http.get('api/goods').then((response) => { // vue-resource
                 response = response.body;
                 if (response.errno === ERR_OK) {
@@ -103,7 +104,11 @@
                 }
                 // console.log(this.goods); // 查看是否有接收到goods資料
             });
-            // this.goods = data.goods;
+            this.goods = data.goods;
+            this.$nextTick(() => { // $nextTick 是在下次DOM更新循環结束後執行延遲回調，在修改數據後使用$nextTick，可以在回調中獲取更新後的DOM，*這樣才可以確保執行函數是使用更新過的DOM
+                this._initScroll();
+                this._calculateHeight();
+            });
         },
         methods: {
             selectMenu(index, event) { // 點擊左邊商品列表時，右側滾動到對應商品位置
@@ -157,13 +162,12 @@
                     this.listHeight.push(height);
                     // console.log(height);
                 }
+            },
+            _followScroll(index) { // BScroll
+                let menuList = this.$refs.menuList;
+                let el = menuList[index];
+                this.meunScroll.scrollToElement(el, 300, 0, -100); // scrollToElement(el, time, offsetX, offsetY, easing)
             }
-            // ,
-            // _followScroll(index) { // BScroll
-            //     let menuList = this.$refs.menuList;
-            //     let el = menuList[index];
-            //     this.meunScroll.scrollToElement(el, 300, 0, -100); // scrollToElement(el, time, offsetX, offsetY, easing)
-            // }
         },
         components: { // 註冊組件
             shopcart,
